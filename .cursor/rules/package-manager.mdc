@@ -1,6 +1,6 @@
- ---
-description: This project uses pnpm as its package manager. All package management operations must use pnpm commands instead of npm or yarn, ensuring consistency in dependency management and lock files.
-globs: ["package.json", "pnpm-lock.yaml"]
+---
+description: This project uses pnpm as its package manager - for installing/removing packages (pnpm add/remove), managing dependencies (pnpm install), updating versions, dev dependencies (pnpm add -D), running scripts (pnpm run), or any package operations - never use npm/yarn commands.
+globs: 
 ---
 
 When managing packages in this project, follow these rules:
