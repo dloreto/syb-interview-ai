@@ -1,0 +1,44 @@
+---
+description: These rules establish a consistent naming convention for React TypeScript components and their styles: root components MUST be named in PascalCase (e.g., MyComponent), ALL elements MUST be prefixed with the root component name followed by descriptors (e.g., MyComponent-section, MyComponent-header-title), NO standalone hyphenated class names are allowed (e.g., 'doc-section' is incorrect, it must be 'ComponentName-doc'), helping with prompts like "How should I name this component?", "What's the pattern for nested elements?", "How do I convert BEM to our convention?", "What's the naming for responsive variations?".
+globs: 
+---
+
+When working with .tsx and .scss files, follow these CSS class naming conventions:
+
+1. Root Component Classes:
+   - Use PascalCase naming
+   - Examples: MyComponent, Header, NavigationBar
+
+2. Descendant Elements:
+   - Pattern: RootComponent-descriptor-subdescriptor
+   - All descriptors should be lowercase and hyphen-separated
+   - Examples: MyComponent-header, MyComponent-content-title
+
+3. Nesting Rules:
+   - Maximum 3 levels of nesting
+   - No BEM-style modifiers
+   - In SCSS, use & operator for nesting
+
+Example SCSS structure:
+```
+.MyComponent {
+  &.MyComponent-header { }
+  &.MyComponent-content {
+
+    /* BAD */
+    &-title { }
+
+    /* Good */
+    &.MyComponent-title { }
+  }
+}
+```
+
+Example TSX usage:
+
+```
+<div className="MyComponent">
+  <header className="MyComponent-header">
+  <div className="MyComponent-content-title">
+</div>
+```

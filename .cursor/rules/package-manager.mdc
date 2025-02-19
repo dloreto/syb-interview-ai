@@ -1,0 +1,22 @@
+ ---
+description: This project uses pnpm as its package manager. All package management operations must use pnpm commands instead of npm or yarn, ensuring consistency in dependency management and lock files.
+globs: ["package.json", "pnpm-lock.yaml"]
+---
+
+When managing packages in this project, follow these rules:
+
+1. Package Installation:
+   - Use `pnpm add <package>` instead of npm install or yarn add
+   - For dev dependencies: `pnpm add -D <package>`
+
+2. Package Removal:
+   - Use `pnpm remove <package>` instead of npm uninstall or yarn remove
+
+3. Project Setup:
+   - Use `pnpm install` to install all dependencies
+   - Never use npm install or yarn install
+
+4. Script Execution:
+   - Use `pnpm run <script>` or `pnpm <script>` for running scripts
+   - Never use npm run or yarn run
+
