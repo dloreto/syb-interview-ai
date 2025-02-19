@@ -12,7 +12,15 @@
     display: flex;
     flex-direction: column;
 
-    span[data-type='mention'] {
+    a:has(span[data-type="mention"]) {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    span[data-type="mention"] {
       color: #0066cc;
       background-color: #e6f3ff;
       border-radius: 4px;

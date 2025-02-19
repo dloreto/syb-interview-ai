@@ -1,34 +1,35 @@
-import './home.css';
-import docHtml from '../assets/doc.html?raw';
-import { useState } from 'react';
-import TurndownService from 'turndown';
-import { marked } from 'marked';
+import "./home.css";
+import docHtml from "../assets/doc.html?raw";
+import { useState } from "react";
+import TurndownService from "turndown";
+import { marked } from "marked";
 
 const turndownService = new TurndownService({
-  headingStyle: 'atx', // Use # style headings
-  codeBlockStyle: 'fenced',
-  blankReplacement: () => '\n​\n\n',
+  headingStyle: "atx", // Use # style headings
+  codeBlockStyle: "fenced",
+  blankReplacement: () => "\n​\n\n",
 });
 
 // Add custom rule for mention spans
-turndownService.addRule('mentions', {
-  filter: node => {
+turndownService.addRule("mentions", {
+  filter: (node) => {
     return (
-      node.nodeName === 'SPAN' && node.getAttribute('data-type') === 'mention'
+      node.nodeName === "SPAN" && node.getAttribute("data-type") === "mention"
     );
   },
   replacement: (content, node) => {
     if (!(node instanceof HTMLElement)) return content;
 
-    const userId = node.getAttribute('data-id');
-    const userUrl = `${window.origin}/user/${userId}`;
-    return `[@${content}](${userUrl})`;
+    const userId = node.getAttribute("data-id");
+    const userUrl = `${window.origin}/syb-interview-ai/user/${userId}`;
+    // Remove @ symbol from the markdown link
+    return `[${content}](${userUrl})`;
   },
 });
 
 const convertHtmlToMarkdown = (html: string): string => {
   const fragment = document.createDocumentFragment();
-  const tempDiv = document.createElement('div');
+  const tempDiv = document.createElement("div");
   tempDiv.innerHTML = html;
   fragment.appendChild(tempDiv);
   return turndownService.turndown(tempDiv.innerHTML);
@@ -40,34 +41,39 @@ const convertMarkdownToHtml = (markdown: string): string => {
 
   // Create a document fragment to manipulate the HTML
   const fragment = document.createDocumentFragment();
-  const tempDiv = document.createElement('div');
+  const tempDiv = document.createElement("div");
   tempDiv.innerHTML = html;
   fragment.appendChild(tempDiv);
 
   // Convert non-breaking space paragraphs to empty paragraphs
-  fragment.querySelectorAll('p').forEach(p => {
-    if (p.innerHTML.trim() === '​') {
+  fragment.querySelectorAll("p").forEach((p) => {
+    if (p.innerHTML.trim() === "​") {
       // Zero width space
-      p.innerHTML = '';
+      p.innerHTML = "";
     }
   });
 
-  // Convert mention links back to spans
-  fragment.querySelectorAll('a').forEach(a => {
+  // Convert mention links back to spans with proper styling
+  fragment.querySelectorAll("a").forEach((a) => {
     const text = a.textContent;
-    const href = a.getAttribute('href');
+    const href = a.getAttribute("href");
 
-    // Check if it's a mention link (starts with [@)
-    if (text?.startsWith('[@') && href?.includes('/user/')) {
-      const userId = href.split('/user/')[1];
-      const userName = text.slice(2, -1); // Remove [@ and ]
+    // Check if it's a mention link (contains /syb-interview-ai/user/)
+    if (href?.includes("/syb-interview-ai/user/")) {
+      const userId = href.split("/user/")[1];
+      const userName = text;
 
-      const mentionSpan = document.createElement('span');
-      mentionSpan.setAttribute('data-type', 'mention');
-      mentionSpan.setAttribute('data-id', userId);
+      const mentionSpan = document.createElement("span");
+      mentionSpan.setAttribute("data-type", "mention");
+      mentionSpan.setAttribute("data-id", userId);
       mentionSpan.textContent = userName;
 
-      a.replaceWith(mentionSpan);
+      // Create a new anchor tag to wrap the mention span
+      const mentionLink = document.createElement("a");
+      mentionLink.href = href;
+      mentionLink.appendChild(mentionSpan);
+
+      a.replaceWith(mentionLink);
     }
   });
 
@@ -80,18 +86,18 @@ interface ClipboardData {
 }
 
 export default function Home() {
-  const [markdownContent, setMarkdownContent] = useState('');
-  const [processedHtml, setProcessedHtml] = useState('');
+  const [markdownContent, setMarkdownContent] = useState("");
+  const [processedHtml, setProcessedHtml] = useState("");
   const [clipboardData, setClipboardData] = useState<ClipboardData | null>(
-    null
+    null,
   );
 
   const handleProcessToMarkdown = () => {
-    const docElement = document.querySelector('.Home-doc');
+    const docElement = document.querySelector(".Home-doc");
     if (docElement) {
       const markdown = convertHtmlToMarkdown(docElement.innerHTML);
       setMarkdownContent(markdown);
-      setProcessedHtml('');
+      setProcessedHtml("");
     }
   };
 
@@ -101,30 +107,30 @@ export default function Home() {
   };
 
   const handleCopyToClipboard = async () => {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.innerHTML = processedHtml;
 
     try {
       await navigator.clipboard.write([
         new ClipboardItem({
-          'text/plain': new Blob([div.textContent || ''], {
-            type: 'text/plain',
+          "text/plain": new Blob([div.textContent || ""], {
+            type: "text/plain",
           }),
-          'text/html': new Blob([div.innerHTML], { type: 'text/html' }),
+          "text/html": new Blob([div.innerHTML], { type: "text/html" }),
         }),
       ]);
-      alert('Content copied to clipboard in both formats!');
+      alert("Content copied to clipboard in both formats!");
     } catch (err) {
-      console.error('Failed to copy:', err);
-      alert('Failed to copy to clipboard');
+      console.error("Failed to copy:", err);
+      alert("Failed to copy to clipboard");
     }
   };
 
   const handlePaste = async (e: React.ClipboardEvent) => {
     e.preventDefault();
     const data: ClipboardData = {
-      text: e.clipboardData.getData('text/plain'),
-      html: e.clipboardData.getData('text/html'),
+      text: e.clipboardData.getData("text/plain"),
+      html: e.clipboardData.getData("text/html"),
     };
     setClipboardData(data);
   };
