@@ -1,5 +1,5 @@
 ---
-description: When testing the application in production mode, follow these steps to build and serve the application correctly
+description: Guide for running/testing in production mode (build, serve, preview) - use for: prod deployment, production build, serve prod, test prod build, preview prod [keywords: production, build, serve, preview, static, deployment]
 globs:
 ---
 
@@ -20,16 +20,20 @@ pnpm build
 ```bash
 pnpx serve build/client
 ```
+### Important Notes About Serving
+- ⚠️ ONLY use `serve` - it's included by default, DO NOT install any additional packages (sirv, http-server, etc.)
+- ⚠️ If port 3000 is in use, `serve` will automatically pick another port
+- ⚠️ The server will show you the actual URL to use in the terminal output
+- ⚠️ Always serve from `build/client` directory, never from root or other directories
+
 ### Expected Output
 - Server should start successfully
 - You should see a message with local and network URLs
 - Default URL will be http://localhost:3000
 
 ## 3. Open in Browser
-### OS-Specific Commands
-Choose the appropriate command based on your operating system:
+The server will show you the exact URL to use. For Windows PowerShell, you can open it with:
 
-#### Windows (PowerShell)
 ```powershell
 Start-Process "http://localhost:3000"
 ```
@@ -52,8 +56,9 @@ Ask the user to verify that the application works correctly in their browser.
 Press `Ctrl+C` in the terminal where the serve command is running
 
 ## Important Notes
-- ⚠️ Always complete the full testing process before deployment
-- ⚠️ Ensure all environment variables are properly set
-- ⚠️ The build process must complete successfully before serving
-- ⚠️ Get explicit confirmation from the user about successful testing
-- ⚠️ Test on multiple browsers if required by project specifications 
+- ⚠️ DO NOT install any additional packages for serving - use ONLY the built-in `serve` command
+- ⚠️ Always run `pnpm build` before serving
+- ⚠️ Always serve from `build/client` directory
+- ⚠️ Check the terminal output for the correct port number
+- ⚠️ If you see 404 errors for assets, ensure you're serving from the correct directory
+- ⚠️ Make sure all environment variables are properly set before building 
