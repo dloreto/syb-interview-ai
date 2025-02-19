@@ -1,0 +1,1 @@
+import{w as t}from"./with-props--QDB0GLh.js";import{p as o,l as s}from"./chunk-HA7DTUK3-DdCn3I25.js";const c=t(function(){const[r]=o(),e=r.get("id");return s.jsx("div",{children:s.jsxs("p",{children:["User ID: ",e]})})});export{c as default};

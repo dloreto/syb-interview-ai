@@ -1,11 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 export default function User() {
-  const { id } = useParams();
+	const [searchParams] = useSearchParams();
+	const id = searchParams.get("id");
 
-  return (
-    <div>
-      <p>User ID: {id}</p>
-    </div>
-  );
+	return (
+		<div>
+			<p>User ID: {id}</p>
+		</div>
+	);
 }

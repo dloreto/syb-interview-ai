@@ -1,1 +1,0 @@
-import{q as p,t,v as e,p as o,r as s,w as u}from"./chunk-HA7DTUK3-BPTueAve.js";function i(a){return function(){const r={params:o(),loaderData:e(),actionData:t(),matches:p()};return s.createElement(a,r)}}function m(a){return function(){const r={params:o(),loaderData:e(),actionData:t(),error:u()};return s.createElement(a,r)}}export{m as a,i as w};
