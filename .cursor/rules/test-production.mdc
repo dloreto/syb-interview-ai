@@ -1,0 +1,59 @@
+---
+description: When testing the application in production mode, follow these steps to build and serve the application correctly
+globs:
+---
+
+# Production Testing Guide
+
+## 1. Build Process
+### Command
+```bash
+pnpm build
+```
+### Expected Output
+- Build files will be generated in the `build` directory
+- Verify that the build completes without errors
+- Look for "built successfully" message in the output
+
+## 2. Serve Production Build
+### Command
+```bash
+pnpx serve build/client
+```
+### Expected Output
+- Server should start successfully
+- You should see a message with local and network URLs
+- Default URL will be http://localhost:3000
+
+## 3. Open in Browser
+### OS-Specific Commands
+Choose the appropriate command based on your operating system:
+
+#### Windows (PowerShell)
+```powershell
+Start-Process "http://localhost:3000"
+```
+
+#### macOS (Terminal)
+```bash
+open http://localhost:3000
+```
+
+#### Linux (Terminal)
+```bash
+xdg-open http://localhost:3000
+```
+
+## 4. Testing
+Ask the user to verify that the application works correctly in their browser.
+
+## 5. Cleanup
+### Stop the Server
+Press `Ctrl+C` in the terminal where the serve command is running
+
+## Important Notes
+- ⚠️ Always complete the full testing process before deployment
+- ⚠️ Ensure all environment variables are properly set
+- ⚠️ The build process must complete successfully before serving
+- ⚠️ Get explicit confirmation from the user about successful testing
+- ⚠️ Test on multiple browsers if required by project specifications 

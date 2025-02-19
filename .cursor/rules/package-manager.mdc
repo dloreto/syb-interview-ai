@@ -20,3 +20,8 @@ When managing packages in this project, follow these rules:
    - Use `pnpm run <script>` or `pnpm <script>` for running scripts
    - Never use npm run or yarn run
 
+5. External CLI Tools:
+   - Use `pnpx <command>` to execute external CLI tools without installation
+   - Never use npx or yarn dlx
+   - Example: Use `pnpx serve dist` to serve a production build locally
+
