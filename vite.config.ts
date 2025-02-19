@@ -4,4 +4,5 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
 	plugins: [reactRouter(), tsconfigPaths()],
+	base: "/syb-interview-ai/", // Base URL for GitHub Pages
 });

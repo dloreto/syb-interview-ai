@@ -1,1 +1,0 @@
-import{w as o}from"./with-props-D_1atSAQ.js";import{p as t,l as s}from"./chunk-HA7DTUK3-BPTueAve.js";const p=o(function(){const{id:r}=t();return s.jsx("div",{children:s.jsxs("p",{children:["User ID: ",r]})})});export{p as default};
