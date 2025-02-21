@@ -36,7 +36,3 @@ pnpm install
 ```sh
 pnpm run dev
 ```
-
-![1](image.png)
-
-![2](image-1.png)
